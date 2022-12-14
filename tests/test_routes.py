@@ -22,11 +22,9 @@ BASE_URL = "/accounts"
 
 HTTPS_ENVIRON = {'wsgi.url_scheme': 'https'}
 
-######################################################################
-#  T E S T   C A S E S
-######################################################################
 class TestAccountService(TestCase):
     """Account Service Tests"""
+
 
     @classmethod
     def setUpClass(cls):
@@ -43,12 +41,14 @@ class TestAccountService(TestCase):
     def tearDownClass(cls):
         """Runs once before test suite"""
 
+
     def setUp(self):
         """Runs before each test"""
         db.session.query(Account).delete()  # clean up the last tests
         db.session.commit()
 
         self.client = app.test_client()
+
 
     def tearDown(self):
         """Runs once after each test case"""
@@ -183,9 +183,11 @@ class TestAccountService(TestCase):
         for key, value in headers.items():
             self.assertEqual(response.headers.get(key), value)
     
+
     def test_cors_security(self):
         """It should return a CORS header"""
         response = self.client.get('/', environ_overrides=HTTPS_ENVIRON)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         # Check for the CORS header
         self.assertEqual(response.headers.get('Access-Control-Allow-Origin'), '*')
+    
